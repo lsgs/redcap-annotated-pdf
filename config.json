@@ -3,7 +3,7 @@
 
 	"description": "Export PDF of all forms (blank) with metadata annotations.",
 
-	"namespace": "MCRI\\AnnotatedCRF",
+	"namespace": "MCRI\\AnnotatedPDF",
 
 	"authors": [
 		{
