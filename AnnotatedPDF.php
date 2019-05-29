@@ -1,14 +1,14 @@
 <?php
 /**
- * REDCap External Module: Annotated CRF
+ * REDCap External Module: Annotated PDF
  * Export PDF of all forms (blank) with metadata annotations.
  * @author Luke Stevens, Murdoch Children's Research Institute
  */
-namespace MCRI\AnnotatedCRF;
+namespace MCRI\AnnotatedPDF;
 
 use ExternalModules\AbstractExternalModule;
 
-class AnnotatedCRF extends AbstractExternalModule
+class AnnotatedPDF extends AbstractExternalModule
 {
         public function redcap_project_home_page($project_id) {
 /*                // include download button on Project Home page (if user can see codebook btn)
@@ -18,7 +18,7 @@ class AnnotatedCRF extends AbstractExternalModule
  * 
  * 
  */
-                $url = $this->getUrl('annotated_crf.php');
+                $url = $this->getUrl('annotated_pdf.php');
                 ?>
                 <script type="text/javascript">
                     $(document).ready(function() {
