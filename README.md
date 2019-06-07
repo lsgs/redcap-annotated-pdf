@@ -19,5 +19,9 @@ Annotations appear beneath each field's label in the PDF within curly brackets {
 Also annotated are the values for dropdown and radio fields:
 * Each choice label has the corresponding value prepended within curly brackets.
 
-
+## Screenshots
+### Design/data_dictionary_codebook.php
+![Button on Codebook page](./codebook.png)
+### PDF Annotations
+![PDF annotations](./pdf_annotations.png)
 ********************************************************************************
