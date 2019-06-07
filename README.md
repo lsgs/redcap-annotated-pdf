@@ -6,8 +6,18 @@ Luke Stevens, Murdoch Children's Research Institute https://www.mcri.edu.au
 ********************************************************************************
 ## Summary
 
-Export PDF of all forms (blank) with metadata annotations.
+This module adds a button, "Annotated PDF", to the project Codebook page. Click it to download an all-forms PDF file (blank) with metadata annotations.
 
-Button to trigger download is included in the Quick Tasks section of the Project Home page for users that can see the Codebook button.
+## Annotations
+
+Annotations appear beneath each field's label in the PDF within curly brackets {}:
+* Variable name
+* Field type
+* Text validation type (if applicable)
+* Branching logic
+
+Also annotated are the values for dropdown and radio fields:
+* Each choice label has the corresponding value prepended within curly brackets.
+
 
 ********************************************************************************
