@@ -1,7 +1,7 @@
 {
 	"name": "Annotated PDF",
 
-	"description": "Export PDF of all forms (blank) with metadata annotations.",
+	"description": "Click the \"Annotated PDF\" button on the project Codebook page to download an all-forms PDF file (blank) with metadata annotations.",
 
 	"namespace": "MCRI\\AnnotatedPDF",
 
@@ -14,10 +14,10 @@
 	],
 
 	"permissions": [
-                "redcap_project_home_page"
+                "redcap_every_page_top"
 	],
 
-	"enable-every-page-hooks-on-system-pages": true,
+	"enable-every-page-hooks-on-system-pages": false,
 
 	"links": {
 	},

@@ -10,31 +10,29 @@ use ExternalModules\AbstractExternalModule;
 
 class AnnotatedPDF extends AbstractExternalModule
 {
-        public function redcap_project_home_page($project_id) {
-/*                // include download button on Project Home page (if user can see codebook btn)
-                // make the url like a plugin url to circumvent EM framework and allow use of antecedent/patchwork to redefine renderPDF()
-                $thisPathDirs = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
-                $url = APP_PATH_WEBROOT_FULL.$thisPathDirs[count($thisPathDirs)-2].'/'.$thisPathDirs[count($thisPathDirs)-1].'/annotated_pdf.php?pid='.$project_id;
- * 
- * 
- */
-                $url = $this->getUrl('annotated_pdf.php');
-                ?>
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        if ($('button[onclick*="data_dictionary_codebook"]').length) {
-                            $('#quick-tasks tr:last').after(
-                                '<tr>'+
-                                    '<td style="width:165px;" valign="middle">'+
-                                        '<button class="btn btn-defaultrc btn-xs" onclick="window.location.href=\'<?php echo $url;?>\'"><img src="'+app_path_images+'pdf.gif" style="vertical-align:middle;"/> <span style="font-size:12px;vertical-align:middle;">Annotated CRF</span></button>'+
-                                    '</td>'+
-                                    '<td valign="middle">Export PDF of all forms (blank) with metadata annotations.</td>'+
-                                '</tr>'
-                            );
-                        }
-                    });
-                </script>
-                <?php
+        public function redcap_every_page_top($project_id) {
+                if (PAGE==='Design/data_dictionary_codebook.php') {
+                        $url = $this->getUrl('annotated_pdf.php');
+                        ?>
+                        <button id="annotated-crf-btn" class="btn btn-defaultrc btn-xs">
+                            <img src="<?php echo APP_PATH_IMAGES;?>/pdf.gif" style="vertical-align:middle;"/> 
+                            <span style="font-size:12px;vertical-align:middle;">Annotated PDF</span>
+                        </button>
+                        <style type="text/css">
+                            #annotated-crf-btn { display: none; margin-top:5px; }
+                        </style>
+                        <script type="text/javascript">
+                            $(document).ready(function() {
+                                $('#annotated-crf-btn')
+                                    .on('click', function() {
+                                        window.location.href='<?php echo $url;?>';
+                                    })
+                                    .insertAfter('button[onclick*="window.print()"]')
+                                    .show();
+                            });
+                        </script>
+                        <?php
+                }
         }
         
         public function renderAnnotatedPdf() {
@@ -138,18 +136,20 @@ class AnnotatedPDF extends AbstractExternalModule
                 // now tweaking the element label and value labels for annotation purposes
                 $annotated = array();
                 foreach ($metadata as $fld => $fieldattr) {
+                        $annotation = '';
                         
                         if ($fieldattr['element_type']!=='descriptive') {
                                 $type = ($fieldattr['element_type']==='select') ? 'dropdown' : $fieldattr['element_type'];
                                 $valtype = (!is_null($fieldattr['element_validation_type']) && $fieldattr['element_validation_type']==='int') ? 'integer' : $fieldattr['element_validation_type'];
 
-                                $fieldattr['element_label'] = '['.$fieldattr['field_name'].'] '.$fieldattr['element_label'];
-                                $fieldattr['element_label'] .= ' ['.$type;
-                                if (!is_null($valtype)) { $fieldattr['element_label'] .= ' '.$valtype; }
-                                $fieldattr['element_label'] .= ']';
+                                $annotation = PHP_EOL.'{['.$fieldattr['field_name'].'] '.$type;
+                                if (!is_null($valtype)) { $annotation .= ' '.$valtype; }
+                                $annotation .= '}';
                         }
                         
-                        if (!is_null($fieldattr['branching_logic'])) { $fieldattr['element_label'] .= ' {Shown if: '.$fieldattr['branching_logic'].'}'; }
+                        if (!is_null($fieldattr['branching_logic'])) { $annotation .= ' '.PHP_EOL.'{Branching logic (show if): '.$fieldattr['branching_logic'].'}'; }
+                        
+                        $fieldattr['element_label'] .= ' '.$annotation;
                         
                         if (!is_null($fieldattr['element_enum'])) {
                                 $choicesannotated = array();
@@ -158,7 +158,7 @@ class AnnotatedPDF extends AbstractExternalModule
                                         $vl = explode(', ', $thischoice, 2);
                                         $v = trim($vl[0]);
                                         $l = trim($vl[1]);
-                                        $choicesannotated[] = "$v, [$v] $l";
+                                        $choicesannotated[] = $v.', {'.$v.'} '.$l.' ';
                                 }
                                 $fieldattr['element_enum'] = implode('\n', $choicesannotated);
                         }
