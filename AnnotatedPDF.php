@@ -14,7 +14,7 @@ class AnnotatedPDF extends AbstractExternalModule
                 if (PAGE==='Design/data_dictionary_codebook.php') {
                         $url = (version_compare(REDCAP_VERSION, '9.8.0')<0) 
                                 ? APP_PATH_WEBROOT_FULL.'redcap_v'.REDCAP_VERSION.'/PDF/index.php?annotated=1&pid='.$project_id
-                                : APP_PATH_WEBROOT_FULL.'redcap_v'.REDCAP_VERSION.'/index.php?route=PdfController/index&annotated=1&pid='.$project_id;
+                                : APP_PATH_WEBROOT_FULL.'redcap_v'.REDCAP_VERSION.'/index.php?route=PdfController:index&annotated=1&pid='.$project_id;
 
                         ?>
                         <button id="annotated-crf-btn" class="btn btn-defaultrc btn-xs invisible_in_print">
