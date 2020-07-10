@@ -14,7 +14,8 @@
 	],
 
 	"permissions": [
-                "redcap_every_page_top"
+                "redcap_every_page_top",
+                "redcap_pdf"
 	],
 
 	"enable-every-page-hooks-on-system-pages": false,
