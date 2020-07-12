@@ -41,7 +41,11 @@ class AnnotatedPDF extends AbstractExternalModule
         public function redcap_pdf($project_id, $metadata, $data, $instrument, $record, $event_id, $instance) {
                 if (!(isset($_GET['annotated']) && (bool)$_GET['annotated'])) return;
 
-                $this->delayModuleExecution();
+                if ($this->delayModuleExecution()) { 
+                        // Boolean true is returned if the hook was successfully delayed, false if the hook cannot be delayed any longer and this is the module's last chance to perform any required actions. 
+                        // If delay successful, return; immediately to stop the current execution of hook
+                        return; 
+                }
                 
                 // tweak metadata element label and value labels for annotation purposes
                 $annotatedMetadata = array();
