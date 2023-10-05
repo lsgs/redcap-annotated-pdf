@@ -30,7 +30,7 @@ class AnnotatedPDF extends AbstractExternalModule
                                     .on('click', function() {
                                         window.location.href='<?php echo $url;?>';
                                     })
-                                    .insertAfter('button[onclick*="window.print()"]')
+                                    .insertAfter('button[onclick*="printCodebook()"]')
                                     .show();
                             });
                         </script>
