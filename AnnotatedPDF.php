@@ -57,7 +57,13 @@ class AnnotatedPDF extends AbstractExternalModule
                                 $valtype = (!is_null($fieldattr['element_validation_type']) && $fieldattr['element_validation_type']==='int') ? 'integer' : $fieldattr['element_validation_type'];
 
                                 $annotation = PHP_EOL.'{['.$fieldattr['field_name'].'] '.$type;
-                                if (!is_null($valtype)) { $annotation .= ' '.$valtype; }
+                                if (!is_null($valtype)) {
+                                if(!is_null($fieldattr['element_validation_min'])){$valmin  = ', Min: '. $fieldattr['element_validation_min'];}
+                                if(!is_null($fieldattr['element_validation_max'])){$valmax = ', Max: ' . $fieldattr['element_validation_min'];}
+                                if(!is_null($fieldattr['field_req']) && $fieldattr['field_req']== '1');{$valreq = ', Required';}
+                                if(!is_null($fieldattr['field_phi']) && $fieldattr['field_phi']== '1');{$valphi = ', Identifier';}
+                                $annotation .= ' ('.$valtype.' '.$valmin.' '.$valmax.' '.$valreq.' ' .$valphi.')';        
+                                }
                                 $annotation .= '}';
                         }
                         
