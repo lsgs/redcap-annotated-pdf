@@ -64,12 +64,14 @@ class AnnotatedPDF extends AbstractExternalModule
 
                                if(!is_null($valtype))
                                {
-                                if(!empty($fieldattr['element_validation_min'])){$valmin  = ', Min: '. $fieldattr['element_validation_min'];}
-                                if(!empty($fieldattr['element_validation_max'])){$valmax = ', Max: '. ($fieldattr['element_validation_max']);}
-                                if($fieldattr['field_req']){$valreq = ', Required';}
-                                if($fieldattr['field_phi']){$valphi = ', Identifier';}
-                                $annotation .= ' ('.$valtype.''.$valmin.''.$valmax.''.$valreq.''.$valphi.')'; 
+                                if(!empty($fieldattr['element_validation_min'])){$valmin  = 'Min: '. $fieldattr['element_validation_min'];}
+                                if(!empty($fieldattr['element_validation_max'])){$valmax = 'Max: '. ($fieldattr['element_validation_max']);}
+                                $annotation .= ' ('.$valtype.' '.$valmin.' '.$valmax.')'; 
                                }
+
+                               if($fieldattr['field_req']){ $valreq = 'Required'; $annotation .= ' '.$valreq; }
+                               if($fieldattr['field_phi']){ $valphi = 'Identifier'; $annotation .= ' '.$valphi; }  
+                                
                                 $annotation .= '}';
                         }
                         
