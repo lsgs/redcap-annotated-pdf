@@ -1,10 +1,7 @@
 {
 	"name": "Annotated PDF",
-
 	"description": "Click the \"Annotated PDF\" button on the project Codebook page to download an all-forms PDF file (blank) with metadata annotations.",
-
 	"namespace": "MCRI\\AnnotatedPDF",
-
 	"authors": [
 		{
 			"name": "Luke Stevens",
@@ -12,23 +9,5 @@
 			"institution": "Murdoch Children's Research Institute"
 		}
 	],
-
-	"permissions": [
-                "redcap_every_page_top",
-                "redcap_pdf"
-	],
-
-	"enable-every-page-hooks-on-system-pages": false,
-
-	"links": {
-	},
-	
-	"no-auth-pages": [
-	],
-
-	"system-settings": [
-	],
-
-	"project-settings": [
-	]
+    "framework-version": 14
 }

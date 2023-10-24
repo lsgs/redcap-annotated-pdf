@@ -15,6 +15,9 @@ class AnnotatedPDF extends AbstractExternalModule
                         $url = (version_compare(REDCAP_VERSION, '9.8.0')<0) 
                                 ? APP_PATH_WEBROOT_FULL.'redcap_v'.REDCAP_VERSION.'/PDF/index.php?annotated=1&pid='.$project_id
                                 : APP_PATH_WEBROOT_FULL.'redcap_v'.REDCAP_VERSION.'/index.php?route=PdfController:index&annotated=1&pid='.$project_id;
+                        $sel = (version_compare(REDCAP_VERSION, '13.10.0')<0) 
+                                ? 'button[onclick*="window.print()"]'
+                                : 'button[onclick*="printCodebook()"]'; // selector for placing button changed with v13.10.0
 
                         ?>
                         <button id="annotated-crf-btn" class="btn btn-defaultrc btn-xs invisible_in_print">
@@ -30,7 +33,7 @@ class AnnotatedPDF extends AbstractExternalModule
                                     .on('click', function() {
                                         window.location.href='<?php echo $url;?>';
                                     })
-                                    .insertAfter('button[onclick*="printCodebook()"]')
+                                    .insertAfter('<?=$sel?>')
                                     .show();
                             });
                         </script>
@@ -62,15 +65,15 @@ class AnnotatedPDF extends AbstractExternalModule
                                 $valreq = NULL;
                                 $valphi = NULL;
 
-                               if(!is_null($valtype))
-                               {
-                                if(!empty($fieldattr['element_validation_min'])){$valmin  = 'Min: '. $fieldattr['element_validation_min'];}
-                                if(!empty($fieldattr['element_validation_max'])){$valmax = 'Max: '. ($fieldattr['element_validation_max']);}
-                                $annotation .= ' ('.$valtype.' '.$valmin.' '.$valmax.')'; 
-                               }
+                                if(!is_null($valtype))
+                                {
+                                    if(!empty($fieldattr['element_validation_min'])){$valmin = 'Min: '. $fieldattr['element_validation_min'];}
+                                    if(!empty($fieldattr['element_validation_max'])){$valmax = 'Max: '. $fieldattr['element_validation_max'];}
+                                    $annotation .= ' ('.trim($valtype.' '.$valmin.' '.$valmax).')'; 
+                                }
 
-                               if($fieldattr['field_req']){ $valreq = 'Required'; $annotation .= ' '.$valreq; }
-                               if($fieldattr['field_phi']){ $valphi = 'Identifier'; $annotation .= ' '.$valphi; }  
+                                if($fieldattr['field_req']){ $valreq = 'Required'; $annotation .= ' '.$valreq; }
+                                if($fieldattr['field_phi']){ $valphi = 'Identifier'; $annotation .= ' '.$valphi; }  
                                 
                                 $annotation .= '}';
                         }
