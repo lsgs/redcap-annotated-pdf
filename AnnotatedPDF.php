@@ -89,11 +89,16 @@ class AnnotatedPDF extends AbstractExternalModule
                 $annotation .= '}';
             }
             
-            if (!is_null($fieldattr['branching_logic'])) { $annotation .= ' '.PHP_EOL.'{Branching logic (show if): '.$fieldattr['branching_logic'].'}'; }
+            if (!is_null($fieldattr['branching_logic'])) { 
+                $annotation .= ' '.PHP_EOL.'{Branching logic (show if): '.str_replace('<>','!=',$fieldattr['branching_logic']).'}'; // replace <> with != because labels get run through strip_tags: $row['element_label'] = trim(strip_tags(br2nl($row['element_label'])));
+            }
             
             $fieldattr['element_label'] .= ' '.$annotation;
             
-            if (!empty($fieldattr['element_enum'])) {
+            if (!empty($fieldattr['element_enum']) && $fieldattr['element_type']=='calc') {
+                // show calc expression
+                $fieldattr['element_label'] .= ' '.PHP_EOL.' {Calculation: '.str_replace('<>','!=',$fieldattr['element_enum']).'}'; // replace <> with != because labels get run through strip_tags: $row['element_label'] = trim(strip_tags(br2nl($row['element_label'])));
+            } else if (!empty($fieldattr['element_enum'])) {
                 $choicesannotated = array();
                 $choices = explode('\n', $fieldattr['element_enum']);
                 foreach ($choices as $thischoice) {
